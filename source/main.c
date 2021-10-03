@@ -7,27 +7,13 @@ int main(void) {
 	DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
 	DDRC = 0xFF; PORTC = 0x00; // Configure port B's 8 pins as outputs, initialize to 0s
 
-
-	unsigned char tempA0123 = 0x00;
-	unsigned char tempB = 0x00;
 	while(1) {
-		tempA01 = PINA & 0x03;
-		switch (tempA01) {
-			case 0x00:
-				tempB = 0x00;
-				break;
-			case 0x01:
-				tempB = 0x01;
-				break;
-			case 0x02:
-				tempB = 0x00;
-				break;
-			case 0x03:
-				tempB = 0x00;
-				break;
-		}
-
-		PORTB = tempB;
+		unsigned char spaces_taken = ((PINA & 0x08) >> 3) + 
+								((PINA & 0x04) >> 2) + 
+								((PINA & 0x02) >> 1) +
+								((PINA & 0x01));
+								
+		PORTC = 4 - spaces_taken;
 	}
 	return 0;
 }
