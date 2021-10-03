@@ -13,7 +13,11 @@ int main(void) {
 								((PINA & 0x02) >> 1) +
 								((PINA & 0x01));
 								
-		PORTC = 4 - spaces_taken;
+		PORTC = (PORTC & 0xF0) | (4 - spaces_taken);
+
+		if (spaces_taken == 4) {
+			PORTC = PORTC | 0x80;
+		}
 	}
 	return 0;
 }
